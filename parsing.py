@@ -7,7 +7,7 @@ def video_finder(path):
     ext = ('.mp4', '.avi', '.mkv')
     GB = 1099511627775
     exclude = ['Windows', 'Riot Games', 'Program Files', 'Program Files (x86)', 'ProgramData', 'AppData', '$RECYCLE.BIN',
-               'Windows10Upgrade', 'CBT Nuggets VMware vSphere 5.5 VCA-DCV VCP5-DCV with Greg Shields', 'Sample']
+               'Windows10Upgrade', 'Sample']
     for root, dirs, filenames in os.walk(path):
         dirs[:] = [d for d in dirs if d not in exclude]
         for filename in filenames:
