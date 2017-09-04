@@ -1,1 +1,2 @@
-# Quick Python scripts for personal use
+# Python Scripts
+Quick scripts for personal use.
