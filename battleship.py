@@ -7,7 +7,7 @@ for x in range(0, 5):
 
 def print_board(board):
   for row in board:
-    print " ".join(row)
+    print(" ".join(row))
 
 print_board(board)
 
@@ -19,28 +19,36 @@ def random_col(board):
 
 ship_row = random_row(board)
 ship_col = random_col(board)
-print ship_row
-print ship_col
+# uncomment the two lines to see the answer
+#print ship_row
+#print ship_col
 
 # Everything from here on should be in your for loop
-# don't forget to properly indent!
-for turn in range(4):
-  print "Turn", turn + 1
-  guess_row = int(raw_input("Guess Row: "))
-  guess_col = int(raw_input("Guess Col: "))
+turn = 0
+while turn <= 4:
+  print("\nTurn", turn + 1)
+  turn += 1
+  guess_row = int(input("Guess Row: "))
+  guess_col = int(input("Guess Col: "))
 
   if guess_row == ship_row and guess_col == ship_col:
-    print "Congratulations! You sank my battleship!" 
+    print("\nCongratulations! You sank my battleship!")
     break
+
   else:
     if guess_row not in range(5) or \
       guess_col not in range(5):
-      print "Oops, that's not even in the ocean."
+      print("\nOops, that's not even in the ocean. Try again!")
+      turn -= 1
+      
     elif board[guess_row][guess_col] == "X":
-      print( "You guessed that one already." )
+      print("\nYou guessed that one already.")
+
     else:
-      print "You missed my battleship!"
+      print("\nYou missed my battleship!")
       board[guess_row][guess_col] = "X"
-      if turn == 3:
-        print 'Game Over'
-    print_board(board)
+      if turn >= 4:
+        print('\nGame Over')
+        break
+  print('\n')
+  print_board(board)  
