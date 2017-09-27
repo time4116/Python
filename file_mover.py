@@ -1,6 +1,5 @@
 import os
 
-
 def file_mover(path, dest):
     ext = ('.mp4', '.avi', '.mkv')
     exclude = ['Windows', 'Program Files', 'Program Files (x86)', 'ProgramData', 'AppData', '$RECYCLE.BIN',
