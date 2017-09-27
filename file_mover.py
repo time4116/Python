@@ -1,7 +1,7 @@
 import os
 '''
-Short function that looks for files of a certain extension and then moves those to a specific destination,
-skipping files that may already exist, then deleting them.
+Short function that looks for files of a certain extension, moves them to a specific destination,
+skipping files that may already exist and deleting them.
 
 '''
 def file_mover(path, dest):
