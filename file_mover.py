@@ -1,5 +1,9 @@
 import os
+'''
+Short function that looks for files of a certain extension and then moves those to a specific destination,
+skipping files that may already exist, then deleting them.
 
+'''
 def file_mover(path, dest):
     ext = ('.mp4', '.avi', '.mkv')
     exclude = ['Windows', 'Program Files', 'Program Files (x86)', 'ProgramData', 'AppData', '$RECYCLE.BIN',
@@ -13,7 +17,7 @@ def file_mover(path, dest):
                 os.makedirs(dest, exist_ok=True)
                 if os.path.isfile(dest + '\\' + filename) != True:
                     os.rename((root + '\\' + filename), (dest + '\\' + filename))
-                    print(('Moving video file to %s' % filename))
+                    print(('Moving file to %s' % filename))
                 else:
                     print(('Removing %s because it already exists at the destination!' % filename))
                     os.remove(root + '\\' + filename)
