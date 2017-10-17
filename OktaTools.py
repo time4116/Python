@@ -26,29 +26,36 @@ for client in clients:
     if client.status != 'NOT_SETUP' and client.status != 'INACTIVE':
         print(client.factorType, client.id, client.status)
 
-# Get all users enrollement date for a specific factor
+# Get all users enrollment date for a specific factor
+site = 'Your Site'
+skey = 'Your Key'
+
+usersClient = UsersClient(site, skey)
+factorClient = FactorsClient(site, skey)
+
+lst = []
 users = usersClient.get_paged_users()
-
-date1 = '2017-10-01' # Date criteria. Get users enrolled after this date.
-date1 = datetime.strptime(date1, "%Y-%m-%d")
-
-# This is extremly slow. Need to find another way
 while True:
     for user in users.result:
-        lifecycle = factorClient.get_lifecycle_factors(user_id=user.id)
-        #print("\n")
-        #print(user.profile.login)
+        if user.status == 'ACTIVE': # Get only active users
+            lst.append(user)
+            
+    if not users.is_last_page():
+        # Keep on fetching pages of users until the last page
+        users = usersClient.get_paged_users(url=users.next_url)
+    else:
+        break
 
-        for life in lifecycle:
-            createdtime = str(life.created)
-            timesplit = createdtime.split(' ')[0] # Select just the year, month and day.
-            fenrolled = datetime.strptime(timesplit, "%Y-%m-%d")
-        
-		if fenrolled >= date1 and life.factorType == 'Factor Name Here': # Make sure to enter the desired factor here
-                print(user.profile.login, life.factorType, life.id, life.created)
-        
-		if not users.is_last_page():
-            # Keep on fetching pages of users until the last page
-            users = usersClient.get_paged_users(url=users.next_url)
-        else:
-            break
+date = '2017-10-01'
+date = datetime.strptime(date, "%Y-%m-%d")
+
+for user in lst:
+    lifecycle = factorClient.get_lifecycle_factors(user_id=user.id)
+    
+    for life in lifecycle:
+        createdtime = str(life.created)
+        timesplit = createdtime.split(' ')[0]  # Select just the year, month and day.
+        enrolledtime = datetime.strptime(timesplit, "%Y-%m-%d")
+		
+        if enrolledtime >= date and life.factorType == 'Factor Name Here': # Make sure to enter the desired factor here
+            print(user.profile.login, life.factorType, life.id, life.created)
