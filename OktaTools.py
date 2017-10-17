@@ -46,7 +46,7 @@ while True:
     else:
         break
 
-date = '2017-10-01'
+date = '2017-10-01' # Specify date
 date = datetime.strptime(date, "%Y-%m-%d")
 
 for user in lst:
