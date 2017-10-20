@@ -23,15 +23,16 @@ while True:
         break
 
 EnrolledUsers = open('C:\\temp\\EnrolledUsers'+currentDate+'.csv', 'w+')
-EnrolledUsers.write("Username,FactorType,UserID,DateEnrolled,TimeEnrolled")
+EnrolledUsers.write("Username,FactorType,UserID,DateEnrolled,TimeEnrolled") # Set CSV Headers
 
 for user in lst:
     lifecycle = factorClient.get_lifecycle_factors(user_id=user.id)
    
     for life in lifecycle:
-        if life.factorType == 'sms': # Select factor type here
+        if life.factorType == 'Factor Name Here': # Select factor type here
             EnrolledUsers.write('\n')
-             time = str(i.created)
+            
+            time = str(i.created)
             timecreated = time1.split()[1]
             datecreated = time1.split()[0]
 
