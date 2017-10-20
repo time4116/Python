@@ -33,9 +33,9 @@ for user in lst:
         if life.factorType == 'Factor Name Here': # Select factor type here
             EnrolledUsers.write('\n')
             
-            time = str(i.created)
-            timecreated = time1.split()[1]
-            datecreated = time1.split()[0]
+            time = str(life.created)
+            timecreated = time.split()[1]
+            datecreated = time.split()[0]
 
-            EnrolledUsers.write(user.profile.login+','+i.factorType+','+i.id+','+datecreated+','+timecreated)
+            EnrolledUsers.write(user.profile.login+','+life.factorType+','+life.id+','+datecreated+','+timecreated)
 EnrolledUsers.close()
