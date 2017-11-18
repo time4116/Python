@@ -1,0 +1,59 @@
+import os, re, time
+
+
+path = "C:\\itemp\\testdir"
+dest = "C:\\itemp\\moved"
+
+ext = ('.mp4', '.avi', '.mkv')
+exclude = []
+
+def remove_empty():
+    if os.listdir(root) == [] and root != path:
+        print("______________Removing the following empty directory: %s" % root)
+        os.rmdir(root)
+        # os.removedirs removes recursively
+
+while True:
+    downloads = os.listdir(path)
+    while not downloads:
+        time.sleep(10)
+        downloads = os.listdir(path)
+
+    for root, dirs, filenames in os.walk(path):
+        remove_empty()
+        filenames[:] = [d for d in filenames if d not in exclude]
+
+        for filename in filenames:
+
+            if filename.endswith(ext) is False:
+                print('Removing file because it is not specified in the ext variable: %s' % filename)
+                os.remove(root + '\\' + filename)
+
+            elif filename.endswith(ext):
+                try:
+                    pattern = re.match('^.*(.*?)S..', filename)
+
+                    foldername = (pattern.group())
+                    folderpath = dest + '\\' + foldername
+                    fullpath = folderpath + "\\" + filename
+
+                    os.makedirs(folderpath, exist_ok=True)
+
+                    if os.path.isfile(fullpath) != True:
+                        root_verbose = (root + '\\' + filename)
+                        #print('Original location: %s' % root_verbose)
+
+                        dest_verbose = (folderpath + '\\' + filename)
+                        #print('New location: %s' % (dest_verbose))
+
+                        os.rename((root + '\\' + filename), (folderpath + '\\' + filename))
+                        print(('Moving file to %s' % dest_verbose))
+
+                    else:
+                        print(('Removing %s because it already exists at the destination!' % filename))
+                        os.remove(root + '\\' + filename)
+
+                except AttributeError:
+                    exclude.append(filename)
+                    print("______________No REGEX MATCH: %s" % filename)
+                    pass
