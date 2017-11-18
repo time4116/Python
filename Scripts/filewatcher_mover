@@ -6,7 +6,10 @@ dest = "C:\\itemp\\moved"
 
 ext = ('.mp4', '.avi', '.mkv')
 exclude = []
+regex1 = '^.*(.*?)S..'
+regex2 = '^.*(.*?)END'
 
+regexlist = [regex1, regex2]
 def remove_empty():
     if os.listdir(root) == [] and root != path:
         print("______________Removing the following empty directory: %s" % root)
@@ -30,8 +33,14 @@ while True:
                 os.remove(root + '\\' + filename)
 
             elif filename.endswith(ext):
-                try:
-                    pattern = re.match('^.*(.*?)S..', filename)
+
+                gotmatch = False
+                for regex in regexlist:
+                    pattern = re.match(regex, filename)
+                    if pattern:
+                        gotmatch = True
+                        break
+                if gotmatch:
 
                     foldername = (pattern.group())
                     folderpath = dest + '\\' + foldername
@@ -52,8 +61,6 @@ while True:
                     else:
                         print(('Removing %s because it already exists at the destination!' % filename))
                         os.remove(root + '\\' + filename)
-
-                except AttributeError:
+                else:
                     exclude.append(filename)
                     print("______________No REGEX MATCH: %s" % filename)
-                    pass
