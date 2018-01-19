@@ -1,2 +1,0 @@
-# Python
-General Scripts & Tools
